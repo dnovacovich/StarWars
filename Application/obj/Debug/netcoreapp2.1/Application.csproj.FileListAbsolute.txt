@@ -1,0 +1,14 @@
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.csprojAssemblyReference.cache
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.csproj.CoreCompileInputs.cache
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.AssemblyInfoInputs.cache
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.AssemblyInfo.cs
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Application.deps.json
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Application.dll
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Application.pdb
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Domain.dll
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Domain.pdb
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.csproj.CopyComplete
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.dll
+C:\Users\Nova\source\repos\StarWars\Application\obj\Debug\netcoreapp2.1\Application.pdb
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Nova\source\repos\StarWars\Application\bin\Debug\netcoreapp2.1\Microsoft.Extensions.Configuration.Abstractions.xml
