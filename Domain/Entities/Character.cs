@@ -6,10 +6,6 @@ namespace Domain.Entities
 {
     public class Character
     {
-        public Character()
-        {
-
-        }
         public string name { get; set; }
         public string height { get; set; }
         public string mass { get; set; }
@@ -22,5 +18,10 @@ namespace Domain.Entities
         public string species_name { get; set; }
         public string average_rating { get; set; }
         public string max_rating { get; set; }
+
+        public Character()
+        {
+            homeworld = new HomeWorld();
+        }
     }
 }

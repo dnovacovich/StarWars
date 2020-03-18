@@ -42,6 +42,7 @@ namespace StarWars.Controllers
             }
             catch (Exception e)
             {
+                // Aca faltaría loggear el error
                 return StatusCode(500);
             }
         }
@@ -67,6 +68,7 @@ namespace StarWars.Controllers
             }
             catch (Exception e)
             {
+                // Aca faltaría loggear el error
                 return StatusCode(500);
             }
             

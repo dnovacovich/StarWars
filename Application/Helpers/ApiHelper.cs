@@ -12,11 +12,28 @@ namespace Application.Helpers
 {
     public static class ApiHelper
     {
+        /// <summary>
+        /// Ejecuta una solicitud http
+        /// </summary>
+        /// <param name="requestUrl"></param>
+        /// <param name="JSONRequest"></param>
+        /// <param name="JSONmethod"></param>
+        /// <param name="JSONContentType"></param>
+        /// <returns></returns>
         public static string MakeJsonRequest(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType)
         {
             return MakeJsonRequestWithHeaders(requestUrl, JSONRequest, JSONmethod, JSONContentType, null);
         }
 
+        /// <summary>
+        /// Ejecuta una solicitud http
+        /// </summary>
+        /// <param name="requestUrl"></param>
+        /// <param name="JSONRequest"></param>
+        /// <param name="JSONmethod"></param>
+        /// <param name="JSONContentType"></param>
+        /// <param name="headers"></param>
+        /// <returns></returns>
         public static string MakeJsonRequestWithHeaders(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType, NameValueCollection headers)
         {
             try
