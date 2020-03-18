@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Helpers;
+﻿using Application.Helpers;
 using Application.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Persistence;
 
 namespace StarWars
 {
@@ -18,6 +13,7 @@ namespace StarWars
     {
         public Startup(IConfiguration configuration)
         {
+            StartUpPersistence.CreateDbContext();
             Configuration = configuration;
         }
 
@@ -28,6 +24,10 @@ namespace StarWars
         {
             services.AddScoped<CharacterManager>();
             services.AddScoped<RequestExternalApiHelper>();
+
+            //// Inyecciones de la capa de persistencia
+            StartUpPersistence.AddPersistenceDI(services);
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -7,3 +7,12 @@ C:\Users\Nova\source\repos\StarWars\Domain\bin\Debug\netcoreapp2.1\Domain.dll
 C:\Users\Nova\source\repos\StarWars\Domain\bin\Debug\netcoreapp2.1\Domain.pdb
 C:\Users\Nova\source\repos\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.dll
 C:\Users\Nova\source\repos\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.pdb
+C:\src\StarWars\Domain\bin\Debug\netcoreapp2.1\Domain.deps.json
+C:\src\StarWars\Domain\bin\Debug\netcoreapp2.1\Domain.dll
+C:\src\StarWars\Domain\bin\Debug\netcoreapp2.1\Domain.pdb
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.csprojAssemblyReference.cache
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.csproj.CoreCompileInputs.cache
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.AssemblyInfoInputs.cache
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.AssemblyInfo.cs
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.dll
+C:\src\StarWars\Domain\obj\Debug\netcoreapp2.1\Domain.pdb

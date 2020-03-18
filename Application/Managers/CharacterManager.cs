@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Exceptions;
+﻿using Application.Exceptions;
 using Application.Helpers;
+using Application.Interfaces.Repositories;
 using Application.Mappers;
 using Domain.Entities;
 using Domain.Entities.ExternalApi;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Managers
 {
     public class CharacterManager
     {
         #region Field's
-        private readonly RequestExternalApiHelper _requestExternalApiHelper; 
+        private readonly RequestExternalApiHelper _requestExternalApiHelper;
+        private readonly IRatingRepository _ratingRepository;
         #endregion
 
-        public CharacterManager(RequestExternalApiHelper requestExternalApiHelper)
+        #region Constructor
+        public CharacterManager(RequestExternalApiHelper requestExternalApiHelper, IRatingRepository ratingRepository)
         {
             this._requestExternalApiHelper = requestExternalApiHelper;
-        }
+            this._ratingRepository = ratingRepository;
+        } 
+        #endregion
 
         #region Public Method's
         /// <summary>
@@ -39,16 +41,21 @@ namespace Application.Managers
 
             PlanetApi planetApi = _requestExternalApiHelper.searchPlanet(characterApi.homeworld);
             SpeciesApi speciesApi = _requestExternalApiHelper.searchSpecies(characterApi.species.FirstOrDefault());
+            List<Rating> ratings = _ratingRepository.GetRatingsByCharacterId(id);
 
-            result = CharacterMapper.Map(characterApi, planetApi, speciesApi);
+            result = CharacterMapper.Map(characterApi, planetApi, speciesApi, ratings);
 
             return result;
         } 
 
-
-        public void RateCharacter(int id, int score)
+        /// <summary>
+        /// Agrega la puntación de un personaje
+        /// </summary>
+        /// <param name="charId"></param>
+        /// <param name="score"></param>
+        public void RateCharacter(int charId, int score)
         {
-
+            _ratingRepository.Add(charId, score);
         }
 
         #endregion

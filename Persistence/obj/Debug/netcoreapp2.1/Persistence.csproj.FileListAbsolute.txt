@@ -1,0 +1,14 @@
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Persistence.deps.json
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Persistence.dll
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Persistence.pdb
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Application.dll
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Domain.dll
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Application.pdb
+C:\src\StarWars\Persistence\bin\Debug\netcoreapp2.1\Domain.pdb
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.csprojAssemblyReference.cache
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.csproj.CoreCompileInputs.cache
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.AssemblyInfoInputs.cache
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.AssemblyInfo.cs
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.csproj.CopyComplete
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.dll
+C:\src\StarWars\Persistence\obj\Debug\netcoreapp2.1\Persistence.pdb

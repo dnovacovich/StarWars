@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.Exceptions;
+﻿using Application.Exceptions;
 using Application.Managers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace StarWars.Controllers
 {
@@ -48,10 +45,29 @@ namespace StarWars.Controllers
             }
         }
 
-        // POST api/values
-        [HttpPost("{id}/rating")]
-        public void RateCharacter([FromBody] int score, int id)
+
+        /// <summary>
+        /// Agrega una puntuación de un personaje
+        /// </summary>
+        /// <param name="score"></param>
+        /// <param name="charId"></param>
+        [HttpPost("{charId}/rating")]
+        public ActionResult RateCharacter([FromBody] int score, int charId)
         {
+            if (!(score >= 1 && score <= 5))
+                return BadRequest("La puntuación debe ser un número del 1 al 5");
+
+            try
+            {
+                _characterManager.RateCharacter(charId, score);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500);
+            }
+            
 
         } 
         #endregion
