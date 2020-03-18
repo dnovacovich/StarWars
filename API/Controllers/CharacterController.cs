@@ -27,6 +27,7 @@ namespace StarWars.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 15)]
         public ActionResult<Domain.Entities.Character> Get(int id)
         {
             try
@@ -54,14 +55,15 @@ namespace StarWars.Controllers
         [HttpPost("{charId}/rating")]
         public ActionResult RateCharacter([FromBody] int score, int charId)
         {
-            if (!(score >= 1 && score <= 5))
-                return BadRequest("La puntuación debe ser un número del 1 al 5");
-
             try
             {
                 _characterManager.RateCharacter(charId, score);
 
                 return Ok();
+            }
+            catch (ScoreOutOfRangeException e)
+            {
+                return BadRequest(e.Message);
             }
             catch (Exception e)
             {

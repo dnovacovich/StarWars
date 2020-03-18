@@ -24,7 +24,7 @@ namespace Application.Mappers
             result.homeworld = HomeWorldMapper.Map(planetApi);
             result.species_name = (speciesApi != null) ? speciesApi.name : "";
 
-            if (ratings.Count() > 0)
+            if (ratings != null && ratings.Count() > 0)
             {
                 result.max_rating = ratings.Max(x => x.Score).ToString();
                 result.average_rating = Math.Round(ratings.Average(x => x.Score), 2).ToString();

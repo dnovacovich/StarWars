@@ -55,6 +55,11 @@ namespace Application.Managers
         /// <param name="score"></param>
         public void RateCharacter(int charId, int score)
         {
+            if (!(score >= 1 && score <= 5))
+            {
+                throw new ScoreOutOfRangeException("La puntuación debe ser un número del 1 al 5");
+            }
+
             _ratingRepository.Add(charId, score);
         }
 
