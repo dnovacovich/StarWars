@@ -8,6 +8,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Managers
 {
@@ -34,7 +35,7 @@ namespace Application.Managers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Character SearchCharacter(int id)
+        public async Task<Character> SearchCharacter(int id)
         {
             Character result;
 
@@ -55,7 +56,7 @@ namespace Application.Managers
 
             result = CharacterMapper.Map(characterApi, planetApi, speciesApi, ratings);
 
-            return result;
+            return await Task.FromResult(result);
         }
       
         /// <summary>

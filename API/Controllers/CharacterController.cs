@@ -2,6 +2,7 @@
 using Application.Managers;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace StarWars.Controllers
 {
@@ -27,11 +28,11 @@ namespace StarWars.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public ActionResult<Domain.Entities.Character> Get(int id)
+        public async Task<ActionResult<Domain.Entities.Character>> Get(int id)
         {
             try
             {
-                Domain.Entities.Character result = _characterManager.SearchCharacter(id);
+                Domain.Entities.Character result = await _characterManager.SearchCharacter(id);
 
                 return Ok(result);
             }
