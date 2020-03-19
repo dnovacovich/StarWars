@@ -47,7 +47,6 @@ namespace StarWars.Controllers
             }
         }
 
-
         /// <summary>
         /// Agrega una puntuación de un personaje
         /// </summary>
@@ -71,8 +70,6 @@ namespace StarWars.Controllers
                 // Aca faltaría loggear el error
                 return StatusCode(500);
             }
-            
-
         } 
         #endregion
     }

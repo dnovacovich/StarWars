@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Domain.Entities.ExternalApi;
-using Application.Exceptions;
+﻿using Domain.Entities.ExternalApi;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace Application.Helpers
 {

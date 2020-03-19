@@ -2,15 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Context;
 using Persistence.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Persistence
 {
     public static class StartUpPersistence
     {
-
+        /// <summary>
+        /// Crea el contexto de la DB
+        /// </summary>
         public static void CreateDbContext()
         {
             using (var client = new StarWarsDbContext())

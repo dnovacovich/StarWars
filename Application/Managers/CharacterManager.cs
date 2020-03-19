@@ -5,7 +5,6 @@ using Application.Mappers;
 using Domain.Entities;
 using Domain.Entities.ExternalApi;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

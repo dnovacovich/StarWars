@@ -1,16 +1,13 @@
-using Application.Helpers;
-using Application.Managers;
-using Microsoft.Extensions.Configuration;
-using Persistence.Repositories;
-using System;
-using Xunit;
-using Moq;
-using Application.Interfaces.Repositories;
 using Application.Exceptions;
+using Application.Helpers;
+using Application.Interfaces.Repositories;
+using Application.Managers;
 using Domain.Entities;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Moq;
 using System.Threading.Tasks;
-using Domain.Entities.ExternalApi;
+using Xunit;
 
 namespace ApplicationTests
 {
@@ -56,5 +53,6 @@ namespace ApplicationTests
         {
             Assert.Throws<ScoreOutOfRangeException>(() => _characterManager.RateCharacter(1,6));
         }
+
     }
 }
