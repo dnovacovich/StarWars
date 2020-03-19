@@ -27,7 +27,6 @@ namespace StarWars.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [ResponseCache(VaryByHeader = "User-Agent", Duration = 15)]
         public ActionResult<Domain.Entities.Character> Get(int id)
         {
             try

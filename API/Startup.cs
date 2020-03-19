@@ -30,6 +30,7 @@ namespace StarWars
 
 
             services.AddResponseCaching();
+            services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

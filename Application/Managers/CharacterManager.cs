@@ -4,6 +4,8 @@ using Application.Interfaces.Repositories;
 using Application.Mappers;
 using Domain.Entities;
 using Domain.Entities.ExternalApi;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,13 +16,15 @@ namespace Application.Managers
         #region Field's
         private readonly RequestExternalApiHelper _requestExternalApiHelper;
         private readonly IRatingRepository _ratingRepository;
+        private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructor
-        public CharacterManager(RequestExternalApiHelper requestExternalApiHelper, IRatingRepository ratingRepository)
+        public CharacterManager(RequestExternalApiHelper requestExternalApiHelper, IRatingRepository ratingRepository, IMemoryCache memoryCache)
         {
             this._requestExternalApiHelper = requestExternalApiHelper;
             this._ratingRepository = ratingRepository;
+            this._memoryCache = memoryCache;
         } 
         #endregion
 
@@ -34,20 +38,26 @@ namespace Application.Managers
         {
             Character result;
 
-            CharacterApi characterApi = _requestExternalApiHelper.searchCharacter(id);
+            CharacterApi characterApi;
+            PlanetApi planetApi;
+            SpeciesApi speciesApi;
+
+            this.searchCharacterWithCache(id, out characterApi);
 
             if (characterApi == null)
                 throw new CharacterNotFoundException("No se encontró el personaje solicitado");
 
-            PlanetApi planetApi = _requestExternalApiHelper.searchPlanet(characterApi.homeworld);
-            SpeciesApi speciesApi = _requestExternalApiHelper.searchSpecies(characterApi.species.FirstOrDefault());
+
+            this.searchPlanetWithCache(characterApi.homeworld, out planetApi);
+            this.searchSpeciesWithCache(characterApi.species.FirstOrDefault(), out speciesApi);
+
             List<Rating> ratings = _ratingRepository.GetRatingsByCharacterId(id);
 
             result = CharacterMapper.Map(characterApi, planetApi, speciesApi, ratings);
 
             return result;
-        } 
-
+        }
+      
         /// <summary>
         /// Agrega la puntación de un personaje
         /// </summary>
@@ -63,6 +73,52 @@ namespace Application.Managers
             _ratingRepository.Add(charId, score);
         }
 
+        #endregion
+
+
+        #region Private Method's
+        /// <summary>
+        /// Busca un personaje en una API según su ID. (Y se utiliza Cache)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="characterApi"></param>
+        private void searchCharacterWithCache(int id, out CharacterApi characterApi)
+        {
+            if (!_memoryCache.TryGetValue("Character" + id.ToString(), out characterApi))
+            {
+                characterApi = _requestExternalApiHelper.searchCharacter(id);
+                _memoryCache.Set("Character" + id.ToString(), characterApi);
+            }
+        }
+
+        /// <summary>
+        /// Busca un planeta en una API según su url. (Y se utiliza Cache)
+        /// </summary>
+        /// <param name="homeworld"></param>
+        /// <param name="planetApi"></param>
+        private void searchPlanetWithCache(string url, out PlanetApi planetApi)
+        {
+            if (!_memoryCache.TryGetValue(url, out planetApi))
+            {
+                planetApi = _requestExternalApiHelper.searchPlanet(url);
+                _memoryCache.Set(url, planetApi);
+            }
+        }
+
+
+        /// <summary>
+        /// Busca una especie en una API según su url. (Y se utiliza Cache)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="speciesApi"></param>
+        private void searchSpeciesWithCache(string url, out SpeciesApi speciesApi)
+        {
+            if (!_memoryCache.TryGetValue(url, out speciesApi))
+            {
+                speciesApi = _requestExternalApiHelper.searchSpecies(url);
+                _memoryCache.Set(url, speciesApi);
+            }
+        } 
         #endregion
     }
 }
