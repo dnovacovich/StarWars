@@ -76,6 +76,7 @@ namespace Application.Helpers
                 catch (WebException ex)
                 {
                     WebResponse errResp = ex.Response;
+
                     using (Stream respStream = errResp.GetResponseStream())
                     {
                         StreamReader reader = new StreamReader(respStream);
