@@ -17,9 +17,9 @@ namespace Application.Helpers
         /// <param name="JSONmethod"></param>
         /// <param name="JSONContentType"></param>
         /// <returns></returns>
-        public static string MakeJsonRequest(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType)
+        public static string RunRequest(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType)
         {
-            return MakeJsonRequestWithHeaders(requestUrl, JSONRequest, JSONmethod, JSONContentType, null);
+            return RunRequestWithHeaders(requestUrl, JSONRequest, JSONmethod, JSONContentType, null);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Application.Helpers
         /// <param name="JSONContentType"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static string MakeJsonRequestWithHeaders(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType, NameValueCollection headers)
+        public static string RunRequestWithHeaders(string requestUrl, object JSONRequest, string JSONmethod, string JSONContentType, NameValueCollection headers)
         {
             try
             {
@@ -39,8 +39,8 @@ namespace Application.Helpers
 
                 string sb = JsonConvert.SerializeObject(JSONRequest);
 
-                request.Method = JSONmethod;// "POST";
-                request.ContentType = JSONContentType; // "application/json";
+                request.Method = JSONmethod;
+                request.ContentType = JSONContentType; 
                 request.Accept = JSONContentType;
 
                 if (headers != null)

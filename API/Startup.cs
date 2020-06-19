@@ -1,4 +1,6 @@
-﻿using Application.Helpers;
+﻿using Application.ExternalAPIs;
+using Application.Helpers;
+using Application.Interfaces.ExternalAPIs;
 using Application.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +25,7 @@ namespace StarWars
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<CharacterManager>();
-            services.AddScoped<RequestExternalApiHelper>();
+            services.AddScoped<ISwAPI,SwAPI>();
 
             //// Inyecciones de la capa de persistencia
             StartUpPersistence.AddPersistenceDI(services);
@@ -37,8 +39,6 @@ namespace StarWars
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseResponseCaching();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

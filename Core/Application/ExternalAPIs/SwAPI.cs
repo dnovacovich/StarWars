@@ -1,20 +1,23 @@
-﻿using Domain.Entities.ExternalApi;
+﻿using Application.Exceptions;
+using Application.Helpers;
+using Application.Interfaces.ExternalAPIs;
+using Domain.Entities.ExternalApi;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace Application.Helpers
+namespace Application.ExternalAPIs
 {
     /// <summary>
-    /// Solicitudes a API's externas
+    /// Solicitudes a API de Starwars
     /// </summary>
-    public class RequestExternalApiHelper
+    public class SwAPI : ISwAPI
     {
         #region Field's
         private readonly IConfiguration _appConfig;
         #endregion
 
         #region Constructor
-        public RequestExternalApiHelper(IConfiguration appConfig)
+        public SwAPI(IConfiguration appConfig)
         {
             this._appConfig = appConfig;
         }
@@ -29,8 +32,12 @@ namespace Application.Helpers
         /// <returns></returns>
         public CharacterApi searchCharacter(int id)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(_appConfig["ExternalServicesURL:Character"] + id.ToString(), "", "GET", "application/json; charset=utf-8");
-            CharacterApi characterApi = deserializeResult<CharacterApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(_appConfig["ExternalServicesURL:Character"] + id.ToString() + "/", "", "GET", "application/json; charset=utf-8");
+
+            if (string.IsNullOrEmpty(response))
+                throw new CharacterNotFoundException("No se encontró el personaje solicitado");
+
+            CharacterApi characterApi = deserializeResult<CharacterApi>(response);
 
             return characterApi;
         }
@@ -43,8 +50,12 @@ namespace Application.Helpers
         /// <returns></returns>
         public CharacterApi searchCharacter(string url)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(url, "", "GET", "application/json; charset=utf-8");
-            CharacterApi characterApi = deserializeResult<CharacterApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(url, "", "GET", "application/json; charset=utf-8");
+
+            if (string.IsNullOrEmpty(response))
+                throw new CharacterNotFoundException("No se encontró el personaje solicitado");
+
+            CharacterApi characterApi = deserializeResult<CharacterApi>(response);
 
             return characterApi;
         }
@@ -56,10 +67,14 @@ namespace Application.Helpers
         /// <returns></returns>
         public PlanetApi searchPlanet(int id)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(_appConfig["ExternalServicesURL:Planet"] + id.ToString(), "", "GET", "application/json; charset=utf-8");
-            PlanetApi characterApi = deserializeResult<PlanetApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(_appConfig["ExternalServicesURL:Planet"] + id.ToString() + "/", "", "GET", "application/json; charset=utf-8");
 
-            return characterApi;
+            if (string.IsNullOrEmpty(response))
+                return null;
+
+            PlanetApi planetApi = deserializeResult<PlanetApi>(response);
+
+            return planetApi;
         }
 
 
@@ -70,10 +85,14 @@ namespace Application.Helpers
         /// <returns></returns>
         public PlanetApi searchPlanet(string url)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(url, "", "GET", "application/json; charset=utf-8");
-            PlanetApi characterApi = deserializeResult<PlanetApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(url, "", "GET", "application/json; charset=utf-8");
 
-            return characterApi;
+            if (string.IsNullOrEmpty(response))
+                return null;
+
+            PlanetApi planetApi = deserializeResult<PlanetApi>(response);
+
+            return planetApi;
         }
 
 
@@ -84,10 +103,14 @@ namespace Application.Helpers
         /// <returns></returns>
         public SpeciesApi searchSpecies(int id)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(_appConfig["ExternalServicesURL:Species"] + id.ToString(), "", "GET", "application/json; charset=utf-8");
-            SpeciesApi characterApi = deserializeResult<SpeciesApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(_appConfig["ExternalServicesURL:Species"] + id.ToString() + "/", "", "GET", "application/json; charset=utf-8");
 
-            return characterApi;
+            if (string.IsNullOrEmpty(response))
+                return null;
+
+            SpeciesApi speciesApi = deserializeResult<SpeciesApi>(response);
+
+            return speciesApi;
         }
 
 
@@ -98,10 +121,10 @@ namespace Application.Helpers
         /// <returns></returns>
         public SpeciesApi searchSpecies(string url)
         {
-            string responseApiEnvios = ApiHelper.MakeJsonRequest(url, "", "GET", "application/json; charset=utf-8");
-            SpeciesApi characterApi = deserializeResult<SpeciesApi>(responseApiEnvios);
+            string response = ApiHelper.RunRequest(url, "", "GET", "application/json; charset=utf-8");
+            SpeciesApi speciesApi = deserializeResult<SpeciesApi>(response);
 
-            return characterApi;
+            return speciesApi;
         }
         #endregion
 
@@ -116,7 +139,7 @@ namespace Application.Helpers
         private T deserializeResult<T>(string result)
         {
             return JsonConvert.DeserializeObject<T>(result);
-        } 
+        }
         #endregion
     }
 }

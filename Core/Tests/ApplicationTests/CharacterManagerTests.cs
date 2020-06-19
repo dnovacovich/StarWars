@@ -1,5 +1,7 @@
 using Application.Exceptions;
+using Application.ExternalAPIs;
 using Application.Helpers;
+using Application.Interfaces.ExternalAPIs;
 using Application.Interfaces.Repositories;
 using Application.Managers;
 using Domain.Entities;
@@ -19,14 +21,14 @@ namespace ApplicationTests
         {
             // Mock Data
             Mock<IConfiguration> _configuration = new Mock<IConfiguration>();
-            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Character")]).Returns("https://swapi.co/api/people/");
-            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Planet")]).Returns("https://swapi.co/api/planet/");
-            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Species")]).Returns("https://swapi.co/api/species/");
+            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Character")]).Returns("http://swapi.dev/api/people/");
+            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Planet")]).Returns("http://swapi.dev/api/planet/");
+            _configuration.SetupGet(x => x[It.Is<string>(s => s == "ExternalServicesURL:Species")]).Returns("http://swapi.dev/api/species/");
             
             Mock <IRatingRepository> ratingRepository = new Mock<IRatingRepository>();
             ratingRepository.Setup(x => x.Add(It.IsAny<int>(), It.IsAny<int>()));
 
-            Mock<RequestExternalApiHelper> requestExternalApiHelper = new Mock<RequestExternalApiHelper>(_configuration.Object);
+            Mock<SwAPI> requestExternalApiHelper = new Mock<SwAPI>(_configuration.Object);
 
             Mock<IMemoryCache> memoryCache = new Mock<IMemoryCache>();
             memoryCache.Setup(x => x.CreateEntry(It.IsAny<object>())).Returns(Mock.Of<ICacheEntry>);

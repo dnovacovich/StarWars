@@ -1,5 +1,5 @@
 ﻿using Application.Exceptions;
-using Application.Helpers;
+using Application.Interfaces.ExternalAPIs;
 using Application.Interfaces.Repositories;
 using Application.Mappers;
 using Domain.Entities;
@@ -14,15 +14,15 @@ namespace Application.Managers
     public class CharacterManager
     {
         #region Field's
-        private readonly RequestExternalApiHelper _requestExternalApiHelper;
+        private readonly ISwAPI _swAPI;
         private readonly IRatingRepository _ratingRepository;
         private readonly IMemoryCache _memoryCache;
         #endregion
 
         #region Constructor
-        public CharacterManager(RequestExternalApiHelper requestExternalApiHelper, IRatingRepository ratingRepository, IMemoryCache memoryCache)
+        public CharacterManager(ISwAPI swAPI, IRatingRepository ratingRepository, IMemoryCache memoryCache)
         {
-            this._requestExternalApiHelper = requestExternalApiHelper;
+            this._swAPI = swAPI;
             this._ratingRepository = ratingRepository;
             this._memoryCache = memoryCache;
         } 
@@ -43,11 +43,6 @@ namespace Application.Managers
             SpeciesApi speciesApi;
 
             this.searchCharacterWithCache(id, out characterApi);
-
-            if (characterApi == null)
-                throw new CharacterNotFoundException("No se encontró el personaje solicitado");
-
-
             this.searchPlanetWithCache(characterApi.homeworld, out planetApi);
             this.searchSpeciesWithCache(characterApi.species.FirstOrDefault(), out speciesApi);
 
@@ -71,6 +66,9 @@ namespace Application.Managers
             }
 
             _ratingRepository.Add(charId, score);
+
+            //Limpiamos cache
+            _memoryCache.Remove("Character" + charId.ToString());
         }
 
         #endregion
@@ -86,7 +84,7 @@ namespace Application.Managers
         {
             if (!_memoryCache.TryGetValue("Character" + id.ToString(), out characterApi))
             {
-                characterApi = _requestExternalApiHelper.searchCharacter(id);
+                characterApi = _swAPI.searchCharacter(id);
                 _memoryCache.Set("Character" + id.ToString(), characterApi);
             }
         }
@@ -98,11 +96,19 @@ namespace Application.Managers
         /// <param name="planetApi"></param>
         private void searchPlanetWithCache(string url, out PlanetApi planetApi)
         {
-            if (!_memoryCache.TryGetValue(url, out planetApi))
+            if (!string.IsNullOrEmpty(url))
             {
-                planetApi = _requestExternalApiHelper.searchPlanet(url);
-                _memoryCache.Set(url, planetApi);
+                if (!_memoryCache.TryGetValue(url, out planetApi))
+                {
+                    planetApi = _swAPI.searchPlanet(url);
+                    _memoryCache.Set(url, planetApi);
+                }
             }
+            else
+            {
+                planetApi = null;
+            }
+            
         }
 
 
@@ -113,10 +119,16 @@ namespace Application.Managers
         /// <param name="speciesApi"></param>
         private void searchSpeciesWithCache(string url, out SpeciesApi speciesApi)
         {
-            if (!_memoryCache.TryGetValue(url, out speciesApi))
+            if (!string.IsNullOrEmpty(url)) {
+                if (!_memoryCache.TryGetValue(url, out speciesApi))
+                {
+                    speciesApi = _swAPI.searchSpecies(url);
+                    _memoryCache.Set(url, speciesApi);
+                }
+            }
+            else
             {
-                speciesApi = _requestExternalApiHelper.searchSpecies(url);
-                _memoryCache.Set(url, speciesApi);
+                speciesApi = null;
             }
         } 
         #endregion
